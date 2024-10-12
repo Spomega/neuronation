@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\Category;
 use App\Models\Exercise;
 use App\Models\SessionExercise;
+use App\Models\Course;
 
 class UserSessionTest extends TestCase
 {
@@ -44,8 +45,10 @@ class UserSessionTest extends TestCase
      
         $category = Category::factory()->create(['name' => 'Memory']);
 
+        $course = Course::factory()->create(['name' => 'Brain Training']);
+
      
-        $exercise = Exercise::factory()->create(['name' => 'Memory Test', 'category_id' => $category->id]);
+        $exercise = Exercise::factory()->create(['name' => 'Memory Test', 'category_id' => $category->id,'course_id' => $course->id]);
 
        
         $session = UserSession::factory()->create([
@@ -64,7 +67,7 @@ class UserSessionTest extends TestCase
        
         $categories = UserSession::getCategoriesForLastSession($user->id);
 
-        $this->assertEquals('Memory', $categories[0]->categories);
+        $this->assertEquals('Memory', $categories[0]->name);
     }
     
 }
