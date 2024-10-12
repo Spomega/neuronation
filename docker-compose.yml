@@ -1,0 +1,67 @@
+version: '3.8'
+
+
+services:
+  
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/neuronation
+    depends_on:
+      - database
+    networks:
+       - neuro_network
+    environment:
+      - DB_HOST=database
+      - DB_DATABASE=neuro_db
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
+    #env_file:
+       # - '.env'
+
+  database:
+    image: mysql:5.7
+    ports: 
+      - "3306:3306"
+    container_name: database
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: neuro_db
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - neuro_network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: database
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "8081:80"
+    depends_on:
+      - database
+    networks:
+      - neuro_network
+
+networks:
+  neuro_network:
+    driver: bridge
+
+volumes:
+  mysql_data:
+    driver: local
+
+
+
+  
+
+
+      
+      
