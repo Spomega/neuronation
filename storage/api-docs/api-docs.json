@@ -1,0 +1,113 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "NeuroNation API",
+        "version": "1.0"
+    },
+    "paths": {
+        "/api/users/{userId}/sessions/history": {
+            "get": {
+                "tags": [
+                    "User Sessions"
+                ],
+                "summary": "Get session history for a user",
+                "description": "Get session history for the user.",
+                "operationId": "bf20cd6c7b95e4e2fbcf14906ca41797",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "ID of the user",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "history": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "score": {
+                                                        "type": "integer",
+                                                        "example": 85
+                                                    },
+                                                    "date": {
+                                                        "type": "integer",
+                                                        "example": 1696963200
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        },
+        "/api/users/{userId}/sessions/lastest/categories": {
+            "get": {
+                "tags": [
+                    "User Sessions"
+                ],
+                "summary": "Get categories for the user's last session",
+                "description": "Get categories for the user's last session.",
+                "operationId": "c125e8c161a6a685d6079fd50910da2a",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "ID of the user",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "recently_trained": {
+                                            "type": "string",
+                                            "example": "Recently trained: Memory, Concentration"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "User Sessions",
+            "description": "User Sessions"
+        }
+    ]
+}
