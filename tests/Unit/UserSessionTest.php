@@ -5,7 +5,6 @@ namespace Tests\Unit;
 use App\Models\UserSession;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Category;
@@ -15,10 +14,8 @@ use App\Models\Course;
 
 class UserSessionTest extends TestCase
 {
-
     use RefreshDatabase;
 
-    
     public function testGetSessionHistory()
     {
         $user = User::factory()->create();
@@ -39,40 +36,34 @@ class UserSessionTest extends TestCase
      */
     public function testGetCategoriesForLastSession()
     {
-        
+
         $user = User::factory()->create(['name' => 'John Doe', 'email' => 'john@example.com']);
-        
-     
+
+
         $category = Category::factory()->create(['name' => 'Memory']);
 
         $course = Course::factory()->create(['name' => 'Brain Training']);
 
-     
-        $exercise = Exercise::factory()->create(['name' => 'Memory Test', 'category_id' => $category->id,'course_id' => $course->id]);
 
-       
+        $exercise = Exercise::factory()->create(['name' => 'Memory Test', 'category_id' => $category->id, 'course_id' => $course->id]);
+
+
         $session = UserSession::factory()->create([
-            'user_id' => $user->id,
-            'total_score' => 85,
-            'session_date' => Carbon::now()
+            'user_id'      => $user->id,
+            'total_score'  => 85,
+            'session_date' => Carbon::now(),
         ]);
 
-        
+
         SessionExercise::factory()->create([
-            'session_id' => $session->id,
+            'session_id'  => $session->id,
             'exercise_id' => $exercise->id,
-            'score' => 50
+            'score'       => 50,
         ]);
 
-       
+
         $categories = UserSession::getCategoriesForLastSession($user->id);
 
         $this->assertEquals('Memory', $categories[0]->name);
     }
-    
 }
-
-
-
-
-

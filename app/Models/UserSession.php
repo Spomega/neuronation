@@ -19,23 +19,24 @@ class UserSession extends Model
      * @param mixed $userId
      * @return array
      */
-    public static function getSessionHistory($userId) : array
+    public static function getSessionHistory($userId): array
     {
 
-          $connection = DB::getDriverName();
+        $connection = DB::getDriverName();
 
-          if ($connection === 'sqlite') { // this check is for unit tests to run using SQLite 
-              // SQLite version (no UNIX_TIMESTAMP function)
-              return DB::select(
-                  'SELECT total_score AS score,
+        if ($connection === 'sqlite') { // this check is for unit tests to run using SQLite
+            // SQLite version (no UNIX_TIMESTAMP function)
+            return DB::select(
+                'SELECT total_score AS score,
                           strftime("%s", session_date) AS date
                    FROM user_sessions
                    WHERE user_id = ?
                    ORDER BY session_date DESC
                    LIMIT 12',
-                  [$userId]
-              );
-          }
+                [$userId]
+            );
+        }
+
         return DB::select(
             'SELECT total_score AS score, UNIX_TIMESTAMP(session_date) AS date
              FROM user_sessions
@@ -66,5 +67,4 @@ class UserSession extends Model
             [$userId]
         );
     }
-
 }

@@ -9,10 +9,9 @@ class Course extends Model
 {
     use HasFactory;
 
-    protected $table = 'courses';
+    protected $table    = 'courses';
     protected $fillable = ['name'];
 
-    
     public function exercises()
     {
         return $this->hasMany(Exercise::class);

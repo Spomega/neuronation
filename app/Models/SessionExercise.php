@@ -20,7 +20,6 @@ class SessionExercise extends Model
         return $this->belongsTo(UserSession::class);
     }
 
-   
     public function exercise()
     {
         return $this->belongsTo(Exercise::class);
