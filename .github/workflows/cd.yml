@@ -38,3 +38,44 @@ jobs:
         with:
           push: true
           tags: spomega/neuronation:latest
+
+  deploy-k8s-staging:
+    runs-on: ubuntu-latest
+    environment: staging
+    needs:
+      - build-and-upload-docker-image
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+      - name: Update kube config
+        run: aws eks update-kubeconfig --name $EKS_CLUSTER_NAME --region $AWS_REGION
+      - name: Inject secrets
+        uses: cschleiden/replace-tokens@v1
+        with:
+          files: '["kubernetes/*.yaml"]'
+          tokenPrefix: __ # optional, default is #{
+          tokenSuffix: __ # optional, default is }#
+        env:
+          DB_CONNECTION: mysql
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_DATABASE: ${{ secrets.DB_DATABASE }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PORT: 3306
+      - name: Deploy to EKS
+        uses: Azure/k8s-deploy@v1
+        with:
+          namespace: ${{ env.EKS_NAMESPACE }}
+          manifests: |
+            k8s/deployment.yaml
+            k8s/service.yaml
+            k8s/secret.yaml
+      - name: Update deployment status
+        run: |
+          echo "Deployment to EKS Successful"
