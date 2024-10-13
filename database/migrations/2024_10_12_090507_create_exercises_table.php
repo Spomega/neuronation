@@ -21,6 +21,8 @@ return new class extends Migration
             // Foreign key constraints
             $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+
+            $table->index('category_id');
         });
     }
 

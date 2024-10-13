@@ -18,10 +18,8 @@ return new class extends Migration
             $table->timestamp('session_date');
             $table->timestamps();
 
-            // Foreign key constraint
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
-            // Indexes
             $table->index('user_id');
             $table->index('session_date');
     

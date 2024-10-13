@@ -6,6 +6,9 @@ start:
 stop:
 	docker-compose down
 
+.PHONY:
+	
+
 .PHONY: lint
 lint:
 	composer cs-fix
