@@ -18,26 +18,23 @@ class SessionControllerTest extends TestCase
      */
     public function testGetHistory()
     {
-       # $user = User::factory()->create(['name' => 'John Doe', 'email' => 'john@example.com']);
+
+       $user = User::factory()->create(['name' => 'John Doe', 'email' => 'john@example.com']);
 
         UserSession::factory()->create([
-            'user_id' => 1,
+            'user_id' => $user->id,
             'total_score' => 85,
             'session_date' => Carbon::now()->subDays(1),
         ]);
 
         UserSession::factory()->create([
-            'user_id' => 1,
+            'user_id' => $user->id,
             'total_score' => 90,
             'session_date' => Carbon::now()->subDays(2),
         ]);
 
-        dump(UserSession::all());
+        $response = $this->getJson(route('sessions.history', ['userId' => $user->id]));
 
-        // Act: Call the endpoint
-        $response = $this->getJson('/api/users/1/sessions/history');
-
-        // Assert: Check the response
         $response->assertStatus(200)
                  ->assertJsonCount(2, 'history')
                  ->assertJson([
