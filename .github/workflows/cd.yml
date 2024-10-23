@@ -73,9 +73,9 @@ jobs:
         with:
           namespace: ${{ env.EKS_NAMESPACE }}
           manifests: |
-            k8s/deployment.yaml
-            k8s/service.yaml
             k8s/secret.yaml
+            k8s/deployment.yaml
+            k8s/service.yaml 
       - name: Update deployment status
         run: |
           echo "Deployment to EKS Successful"
