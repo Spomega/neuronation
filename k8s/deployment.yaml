@@ -29,22 +29,22 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: neuro-secrets
-                  valueFrom: db_user
+                  key: db_user
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: neuro-secrets
-                  valueFrom: db_password
+                  key: db_password
             - name: DB_HOST
               valueFrom:
                 secretKeyRef:
                   name: neuro-secrets
-                  valueFrom: db_host
+                  key: db_host
             - name: DB_DATABASE
               valueFrom:
                 secretKeyRef:
                   name: neuro-secrets
-                  valueFrom: db_database
+                  key: db_database
 
   strategy:
     type: RollingUpdate
