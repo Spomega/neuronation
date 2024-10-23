@@ -13,6 +13,8 @@ spec:
       app: neuro-app
   template:
     metadata:
+      annotations:
+        kubernetes.io/change-cause: "Deploy $(date)"
       labels:
         app: neuro-app
     spec:
