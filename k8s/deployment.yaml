@@ -24,6 +24,33 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 80
+          env:
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: neuro-secrets
+                  valueFrom: db_user
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: neuro-secrets
+                  valueFrom: db_password
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: neuro-secrets
+                  valueFrom: db_host
+            - name: DB_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: neuro-secrets
+                  valueFrom: db_database
+            - name: DB_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: neuro-secrets
+                  valueFrom: db_port
+
   strategy:
     type: RollingUpdate
     rollingUpdate:
