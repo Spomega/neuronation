@@ -45,11 +45,6 @@ spec:
                 secretKeyRef:
                   name: neuro-secrets
                   valueFrom: db_database
-            - name: DB_PORT
-              valueFrom:
-                secretKeyRef:
-                  name: neuro-secrets
-                  valueFrom: db_port
 
   strategy:
     type: RollingUpdate
