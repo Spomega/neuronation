@@ -80,4 +80,4 @@ Get User's Latest Session Categories
 curl -X 'GET' \
   'http://localhost:8080/api/users/1/sessions/lastest/categories' \
   -H 'accept: application/json' \
-  -H 'X-CSRF-TOKEN: '
+  -H 'X-CSRF-TOKEN: ' 

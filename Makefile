@@ -1,13 +1,10 @@
 .PHONY: start
 start:
-	docker-compose up --build
+	docker-compose up --build -d
 
 .PHONY: stop
 stop:
 	docker-compose down
-
-.PHONY:
-	
 
 .PHONY: lint
 lint:

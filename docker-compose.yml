@@ -16,11 +16,8 @@ services:
       - database
     networks:
        - neuro_network
-    environment:
-      - DB_HOST=database
-      - DB_DATABASE=neuro_db
-      - DB_USERNAME=root
-      - DB_PASSWORD=root
+    env_file:
+      - '.env'
 
   database:
     image: mysql:5.7
