@@ -28,6 +28,6 @@ class MetricsMiddleware
         $histogram = $this->collectorRegistry->getOrRegisterHistogram('app','http_requests_total','Request duration',['path']);
         $histogram->observe($duration,[$request->path()]);
 
-        return response
+        return $response;
     }
 }
