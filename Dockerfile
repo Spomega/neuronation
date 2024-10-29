@@ -3,13 +3,15 @@ FROM php:8.3-apache
 WORKDIR /var/www/neuronation
 
 RUN apt-get update && apt-get install -y \
-    build-essential \
     libonig-dev \
     libzip-dev \
     zip \
     unzip \
     git \
-    curl
+    curl \
+    build-essential \
+    && pecl install redis \
+    && docker-php-ext-enable redis
 
 
 ADD app.neuronation.conf /etc/apache2/sites-available/

@@ -45,6 +45,15 @@ services:
     networks:
       - neuro_network
 
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - .prometheus/prometheus.yml:/etc/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - neuro_network
+
 networks:
   neuro_network:
     driver: bridge
